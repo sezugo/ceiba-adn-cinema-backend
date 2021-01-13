@@ -1,83 +1,129 @@
 package com.ceiba.cinema.dominio.validaciones;
 
-import com.ceiba.cinema.dominio.excepcion.ExcepcionGeneral;
-import com.ceiba.cinema.dominio.validar.ValidarLogicaNegocio;
+
+import com.ceiba.cinema.dominio.modelo.Cliente;
+import com.ceiba.cinema.dominio.modelo.Pelicula;
+import com.ceiba.cinema.dominio.modelo.Reserva;
+import com.ceiba.cinema.testdatabuilder.ClienteTestDataBuilder;
+import com.ceiba.cinema.testdatabuilder.PeliculaTestDataBuilder;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+
 import java.time.LocalDateTime;
+
 
 public class ValidarLogicaNegocioTest {
 
-    @Test
-    public void validarFechaInvalidaTest(){
-        //Arrange
-        ValidarLogicaNegocio validarLogicaNegocio = new ValidarLogicaNegocio();
-        LocalDateTime fechaActual = LocalDateTime.of(2020, 10, 30, 11, 30);
 
-        //Act - Assert
-        Assertions.assertThrows(ExcepcionGeneral.class, () ->{
-                validarLogicaNegocio.diaDelMesSinServicio(fechaActual);
-            }, "No se puede reservar la cancha los dias 30"
-        );
+    private static final LocalDateTime fechaViernes = LocalDateTime.of(2021, 1, 15, 12, 12);
+    private static final LocalDateTime fechaSabado = LocalDateTime.of(2021, 1, 16, 12, 12);
+    private static final LocalDateTime fechaEntregaDomingo = LocalDateTime.of(2021, 1, 17, 12, 12);
+    private static final LocalDateTime fechaEntregaNoEsDomingo = LocalDateTime.of(2021, 1, 13, 12, 12);
+    private static final LocalDateTime fechaSemana = LocalDateTime.of(2021, 1, 12, 12, 12);
 
-    }
 
     @Test
-    public void validarFechaTest(){
+    public void calcularValorReservaDiaViernesTest(){
+
         //Arrange
-        ValidarLogicaNegocio validarLogicaNegocio = new ValidarLogicaNegocio();
-        LocalDateTime fechaActual = LocalDateTime.of(2021, 1, 5, 11, 30);
-
-        //Act - Assert
-        Assertions.assertTrue(fechaActual.getDayOfMonth() != 30);
-
-    }
-
-    @Test
-    public void calcularValorTotalViernesSabado(){
-        //Arrange
-        ValidarLogicaNegocio validarLogicaNegocio = new ValidarLogicaNegocio();
-        LocalDateTime fechaReserva = LocalDateTime.of(2021, 1, 2, 11, 30);
-        Double valor = 50000d;
+        Cliente cliente = new ClienteTestDataBuilder().build();
+        Pelicula pelicula = new PeliculaTestDataBuilder().build();
+        Reserva reserva = new Reserva(1, cliente, pelicula);
+        double precio = 50000d;
 
         //Act
-        Double resultado = validarLogicaNegocio.calcularValorTotal(fechaReserva, valor);
+        double resultado = reserva.calcularValorTotal(fechaViernes, precio);
 
         //Assert
-        Assertions.assertEquals(resultado, 57500);
+        Assertions.assertEquals(resultado, 57500d);
+
     }
 
     @Test
-    public void calcularValorTotal(){
+    public void calcularValorReservaDiaSabadoTest(){
+
         //Arrange
-        ValidarLogicaNegocio validarLogicaNegocio = new ValidarLogicaNegocio();
-        LocalDateTime fechaReserva = LocalDateTime.of(2021, 1, 5, 11, 30);
-        Double valor = 50000d;
+        Cliente cliente = new ClienteTestDataBuilder().build();
+        Pelicula pelicula = new PeliculaTestDataBuilder().build();
+        Reserva reserva = new Reserva(1, cliente, pelicula);
+        double precio = 50000d;
 
         //Act
-        Double resultado = validarLogicaNegocio.calcularValorTotal(fechaReserva, valor);
+        double resultado = reserva.calcularValorTotal(fechaSabado, precio);
 
         //Assert
-        Assertions.assertEquals(resultado, 50000);
+        Assertions.assertEquals(resultado, 57500d);
 
     }
 
     @Test
-    public void calcularFechaEntrega(){
+    public void calcularValorReservaDiaSemanaTest(){
+
         //Arrange
-        ValidarLogicaNegocio validarLogicaNegocio = new ValidarLogicaNegocio();
-        LocalDateTime fechaReserva = LocalDateTime.now();
-        LocalDateTime fechaEntrega = fechaReserva.plusDays(10);
+        Cliente cliente = new ClienteTestDataBuilder().build();
+        Pelicula pelicula = new PeliculaTestDataBuilder().build();
+        Reserva reserva = new Reserva(1, cliente, pelicula);
+        double precio = 50000d;
 
         //Act
-        LocalDateTime resultado = validarLogicaNegocio.calcularFechaEntrega();
+        double resultado = reserva.calcularValorTotal(fechaSemana, precio);
+
+        //Assert
+        Assertions.assertEquals(resultado, 50000d);
+
+    }
+
+    @Test
+    public void calcularFechaEntregaTest(){
+
+        //Arrange
+        Cliente cliente = new ClienteTestDataBuilder().build();
+        Pelicula pelicula = new PeliculaTestDataBuilder().build();
+        Reserva reserva = new Reserva(1, cliente, pelicula);
+        Integer fechaEntrega = LocalDateTime.now().plusDays(10).getDayOfMonth();
+
+        //Act
+        Integer resultado = reserva.calcularFechaEntrega().getDayOfMonth();
 
         //Assert
         Assertions.assertEquals(resultado, fechaEntrega);
 
     }
 
+    @Test
+    public void calcularFechaEntregaDomingoTest(){
+
+        //Arrange
+        Cliente cliente = new ClienteTestDataBuilder().build();
+        Pelicula pelicula = new PeliculaTestDataBuilder().build();
+        Reserva reserva = new Reserva(1, cliente, pelicula);
+        Integer fechaEntrega = fechaEntregaDomingo.plusDays(1).getDayOfMonth();
+
+        //Act
+        Integer resultado = reserva.fechaEntregaReservaCaeDomingo(fechaEntregaDomingo).getDayOfMonth();
+
+        //Assert
+        Assertions.assertEquals(resultado, fechaEntrega);
+
+    }
+
+    @Test
+    public void calcularFechaEntregaNoEsDomingoTest(){
+
+        //Arrange
+        Cliente cliente = new ClienteTestDataBuilder().build();
+        Pelicula pelicula = new PeliculaTestDataBuilder().build();
+        Reserva reserva = new Reserva(1, cliente, pelicula);
+        Integer fechaEntrega = fechaEntregaNoEsDomingo.getDayOfMonth();
+
+        //Act
+        Integer resultado = reserva.fechaEntregaReservaCaeDomingo(fechaEntregaNoEsDomingo).getDayOfMonth();
+
+        //Assert
+        Assertions.assertEquals(resultado, fechaEntrega);
+
+    }
 
 
 }

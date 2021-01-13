@@ -2,6 +2,7 @@ package com.ceiba.cinema.dominio.servicios.cliente;
 
 import com.ceiba.cinema.dominio.excepcion.ExcepcionGeneral;
 import com.ceiba.cinema.dominio.modelo.Cliente;
+import com.ceiba.cinema.dominio.modelo.dto.ClienteDTO;
 import com.ceiba.cinema.dominio.puerto.repositorio.RepositorioCliente;
 import com.ceiba.cinema.testdatabuilder.ClienteTestDataBuilder;
 import org.junit.Test;
@@ -57,19 +58,13 @@ public class ServicioCrearClienteTest {
 
 
         //Act
-        Cliente cliente = repositorioCliente.buscarPorCedula(null);
+        ClienteDTO cliente = repositorioCliente.buscarPorCedula(null);
 
         //Assert
         Assertions.assertEquals(cliente, null);
 
 
     }
-
-
-
-
-
-
 
 
 }

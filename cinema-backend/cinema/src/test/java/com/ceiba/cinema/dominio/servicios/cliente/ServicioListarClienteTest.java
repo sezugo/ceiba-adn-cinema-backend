@@ -1,8 +1,8 @@
 package com.ceiba.cinema.dominio.servicios.cliente;
 
-import com.ceiba.cinema.dominio.modelo.Cliente;
+import com.ceiba.cinema.dominio.modelo.dto.ClienteDTO;
 import com.ceiba.cinema.dominio.puerto.repositorio.RepositorioCliente;
-import com.ceiba.cinema.testdatabuilder.ClienteTestDataBuilder;
+import com.ceiba.cinema.testdatabuilder.ClienteDTOTestDataBuilder;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
@@ -18,8 +18,8 @@ public class ServicioListarClienteTest {
     @Test
     public void listarClienteTest(){
         //Arrange
-        List<Cliente> clientes = new ArrayList<>();
-        Cliente cliente = new ClienteTestDataBuilder().build();
+        List<ClienteDTO> clientes = new ArrayList<>();
+        ClienteDTO cliente = new ClienteDTOTestDataBuilder().build();
         clientes.add(cliente);
 
         repositorioCliente = Mockito.mock(RepositorioCliente.class);
@@ -27,13 +27,11 @@ public class ServicioListarClienteTest {
         Mockito.when(servicioListarCliente.ejecutar()).thenReturn(clientes);
 
         //Act
-        List<Cliente> clientesServicio = servicioListarCliente.ejecutar();
+        List<ClienteDTO> clientesServicio = servicioListarCliente.ejecutar();
 
         //Assert
         Assertions.assertEquals(clientesServicio.get(0).getNombre(), "Peter");
         Assertions.assertEquals(clientesServicio.get(0).getIdCliente(), 10);
-
-
 
     }
 

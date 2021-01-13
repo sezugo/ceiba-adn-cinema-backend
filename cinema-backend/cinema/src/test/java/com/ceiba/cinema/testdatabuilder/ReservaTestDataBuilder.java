@@ -47,7 +47,7 @@ public class ReservaTestDataBuilder {
     }
 
     public Reserva build(){
-        return new Reserva(idReserva, cliente, pelicula, fecha, valorTotal);
+        return new Reserva(idReserva, cliente, pelicula);
     }
 
 

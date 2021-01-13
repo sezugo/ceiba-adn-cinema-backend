@@ -1,8 +1,8 @@
 package com.ceiba.cinema.dominio.servicios.pelicula;
 
-import com.ceiba.cinema.dominio.modelo.Pelicula;
+import com.ceiba.cinema.dominio.modelo.dto.PeliculaDTO;
 import com.ceiba.cinema.dominio.puerto.repositorio.RepositorioPelicula;
-import com.ceiba.cinema.testdatabuilder.PeliculaTestDataBuilder;
+import com.ceiba.cinema.testdatabuilder.PeliculaDTOTestDataBuilder;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
@@ -19,8 +19,8 @@ public class ServicioListarPeliculaTest {
     @Test
     public void listarPeliculaTest(){
         //Arrange
-        List<Pelicula> peliculas = new ArrayList<>();
-        Pelicula pelicula = new PeliculaTestDataBuilder().build();
+        List<PeliculaDTO> peliculas = new ArrayList<>();
+        PeliculaDTO pelicula = new PeliculaDTOTestDataBuilder().build();
         peliculas.add(pelicula);
 
         repositorioPelicula = Mockito.mock(RepositorioPelicula.class);
@@ -28,11 +28,12 @@ public class ServicioListarPeliculaTest {
         Mockito.when(servicioListarPelicula.ejecutar()).thenReturn(peliculas);
 
         //Act
-        List<Pelicula> peliculasServicio = servicioListarPelicula.ejecutar();
+        List<PeliculaDTO> peliculasServicio = servicioListarPelicula.ejecutar();
 
         //Assert
         Assertions.assertEquals(peliculasServicio.get(0).getValor(), 50000d);
         Assertions.assertEquals(peliculasServicio.get(0).getCategoria(), "Terror");
 
     }
+
 }
