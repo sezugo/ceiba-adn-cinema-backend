@@ -23,7 +23,7 @@ pipeline {
 			submoduleCfg: [], 
 			userRemoteConfigs: [[
 			credentialsId: 'GitHub_sezugo', 
-			url:'https://github.com/sezugo/ceiba-adn-cinema'
+			url:'https://github.com/sezugo/ceiba-adn-cinema-backend'
 			]]
 		])	
       }
