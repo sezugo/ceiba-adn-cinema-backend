@@ -10,6 +10,11 @@ import org.junit.jupiter.api.Assertions;
 
 public class PeliculaTest {
 
+    private static final String NOMBRE = "Nosferatu";
+    private static final String CATEGORIA = "Terror";
+    private static final String PUBLICADA = "1922";
+    private static final Double VALOR = 50000d;
+
     private static final String VALOR_VACIO = " ";
 
     @Test
@@ -81,9 +86,52 @@ public class PeliculaTest {
         );
     }
 
+    @Test
+    public void crearPeliculaConNombre(){
+        //Arrange
+        PeliculaTestDataBuilder peliculaTestDataBuilder = new PeliculaTestDataBuilder();
 
+        //Act
+        Pelicula pelicula = peliculaTestDataBuilder.build();
 
+        //Assert
+        Assertions.assertEquals(NOMBRE, pelicula.getNombre());
+    }
 
+    @Test
+    public void crearPeliculaConCategoria(){
+        //Arrange
+        PeliculaTestDataBuilder peliculaTestDataBuilder = new PeliculaTestDataBuilder();
 
+        //Act
+        Pelicula pelicula = peliculaTestDataBuilder.build();
+
+        //Assert
+        Assertions.assertEquals(CATEGORIA, pelicula.getCategoria());
+    }
+
+    @Test
+    public void crearPeliculaConPublicada(){
+        //Arrange
+        PeliculaTestDataBuilder peliculaTestDataBuilder = new PeliculaTestDataBuilder();
+
+        //Act
+        Pelicula pelicula = peliculaTestDataBuilder.build();
+
+        //Assert
+        Assertions.assertEquals(PUBLICADA, pelicula.getPublicada());
+    }
+
+    @Test
+    public void crearPeliculaConValor(){
+        //Arrange
+        PeliculaTestDataBuilder peliculaTestDataBuilder = new PeliculaTestDataBuilder();
+
+        //Act
+        Pelicula pelicula = peliculaTestDataBuilder.build();
+
+        //Assert
+        Assertions.assertEquals(VALOR, pelicula.getValor());
+    }
 
 }
