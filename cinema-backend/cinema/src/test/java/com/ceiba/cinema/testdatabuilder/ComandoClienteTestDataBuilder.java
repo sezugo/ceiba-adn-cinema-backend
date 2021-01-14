@@ -13,13 +13,13 @@ public class ComandoClienteTestDataBuilder {
     private String correo;
 
     public ComandoClienteTestDataBuilder(){
-        this.idCliente = 10;
-        this.nombre = "Peter";
-        this.apellido = "Parker";
-        this.cedula = "1036400700";
-        this.celular = "3135811244";
-        this.dirrecion = "CL 3 # 33 - 13";
-        this.correo = "peterparker@marvel.com";
+        this.idCliente = 1;
+        this.nombre = "Peter1";
+        this.apellido = "Parker1";
+        this.cedula = "10364007001";
+        this.celular = "31358112441";
+        this.dirrecion = "CL 3 # 33 - 131";
+        this.correo = "peterparker1@marvel.com";
     }
 
     public ComandoClienteTestDataBuilder conNombre(String nombre){

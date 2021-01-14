@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -23,9 +24,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = CinemaApplication.class)
-@SpringBootTest
+@SpringBootTest()
 @AutoConfigureMockMvc
+@TestPropertySource(locations = "classpath:application.properties")
 public class ControladorClienteTest {
 
     private static final String CEDULA = "123";
@@ -56,12 +57,12 @@ public class ControladorClienteTest {
                 .content(objectMapper.writeValueAsString(comandoCliente)))
                 .andExpect(status().isOk())
                 .andDo(a-> {
-                    Assert.assertEquals(comandoCliente.getIdCliente().longValue(), 10);
-                    Assert.assertEquals(comandoCliente.getNombre(), "Peter");
-                    Assert.assertEquals(comandoCliente.getApellido(), "Parker");
-                    Assert.assertEquals(comandoCliente.getCedula(), "1036400700");
-                    Assert.assertEquals(comandoCliente.getCelular(), "3135811244");
-                    Assert.assertEquals(comandoCliente.getCorreo(), "peterparker@marvel.com");
+                    Assert.assertEquals(comandoCliente.getIdCliente().longValue(), 1);
+                    Assert.assertEquals(comandoCliente.getNombre(), "Peter1");
+                    Assert.assertEquals(comandoCliente.getApellido(), "Parker1");
+                    Assert.assertEquals(comandoCliente.getCedula(), "10364007001");
+                    Assert.assertEquals(comandoCliente.getCelular(), "31358112441");
+                    Assert.assertEquals(comandoCliente.getCorreo(), "peterparker1@marvel.com");
                 });
     }
 
